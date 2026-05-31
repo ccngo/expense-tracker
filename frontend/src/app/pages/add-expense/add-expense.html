@@ -1,0 +1,64 @@
+<div class="header">
+  <h2>{{ isEditMode() ? 'Edit Expense' : 'Add Expense' }}</h2>
+  <div class="header-actions">
+    @if (!isEditMode() && favorites().length > 0) {
+      <button mat-stroked-button [matMenuTriggerFor]="favMenu">
+        <mat-icon>star</mat-icon> Quick Fill
+      </button>
+      <mat-menu #favMenu="matMenu">
+        @for (fav of favorites(); track fav.id) {
+          <button mat-menu-item (click)="applyFavorite(fav)">
+            <span>{{ fav.title }}</span>
+            <span class="fav-meta">{{ fav.amount | currency }} · <app-category-label [value]="fav.category" /></span>
+          </button>
+        }
+      </mat-menu>
+    }
+    <button mat-icon-button (click)="help.open('add-expense')"><mat-icon>help_outline</mat-icon></button>
+  </div>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="submit()" class="form">
+  <mat-form-field>
+    <mat-label>Title</mat-label>
+    <input matInput formControlName="title" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Amount</mat-label>
+    <input matInput type="number" formControlName="amount" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Category</mat-label>
+    <mat-select formControlName="category">
+      @for (cat of categories; track cat) {
+        <mat-option [value]="cat"><app-category-label [value]="cat" /></mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Date</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="date" />
+    <mat-datepicker-toggle matIconSuffix [for]="picker" />
+    <mat-datepicker #picker />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Payment Method (optional)</mat-label>
+    <mat-select formControlName="paymentMethod">
+      <mat-option value="">— None —</mat-option>
+      @for (pm of paymentMethods; track pm) {
+        <mat-option [value]="pm">{{ pm | enumLabel }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Notes</mat-label>
+    <textarea matInput formControlName="notes" rows="3"></textarea>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Save</button>
+</form>

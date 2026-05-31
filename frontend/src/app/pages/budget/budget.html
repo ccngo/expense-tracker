@@ -1,0 +1,72 @@
+<div class="page-header">
+  <h2>Budget Plans</h2>
+  <button mat-icon-button (click)="help.open('budget')"><mat-icon>help_outline</mat-icon></button>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="submit()" class="form">
+  <mat-form-field>
+    <mat-label>Type</mat-label>
+    <mat-select formControlName="type">
+      @for (group of typeGroups; track group.label) {
+        <mat-optgroup [label]="group.label">
+          @for (t of group.types; track t) {
+            <mat-option [value]="t">{{ t | enumLabel }}</mat-option>
+          }
+        </mat-optgroup>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Period</mat-label>
+    <mat-select formControlName="period">
+      @for (p of periods; track p) {
+        <mat-option [value]="p">{{ p | enumLabel }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Limit</mat-label>
+    <input matInput type="number" formControlName="limit" />
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Add Plan</button>
+</form>
+
+@if (summaries().length === 0) {
+  <p class="empty">No budget plans yet. Add one above to start tracking.</p>
+} @else {
+  <div class="plans-grid">
+    @for (s of summaries(); track s.id) {
+      <div class="plan-card">
+        <div class="plan-header">
+          <span class="plan-label">{{ s.type | enumLabel }} · {{ s.period | enumLabel }}</span>
+          <button mat-icon-button color="warn" (click)="delete(s.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+
+        <div class="progress-track">
+          <div
+            class="progress-fill {{ progressClass(s.percentage) }}"
+            [style.width.%]="s.percentage > 100 ? 100 : s.percentage">
+          </div>
+        </div>
+
+        <div class="plan-meta">
+          <span>{{ s.spent | currency }} <span class="muted">of {{ s.limit | currency }}</span></span>
+          <span [class]="progressClass(s.percentage)">
+            @if (s.percentage >= 100) {
+              {{ (s.spent - s.limit) | currency }} over
+            } @else {
+              {{ (s.limit - s.spent) | currency }} left
+            }
+          </span>
+        </div>
+
+        <div class="plan-pct {{ progressClass(s.percentage) }}">{{ s.percentage }}%</div>
+      </div>
+    }
+  </div>
+}

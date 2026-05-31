@@ -1,0 +1,20 @@
+.sidenav-container {
+  height: calc(100vh - 64px);
+}
+
+.sidenav {
+  width: 220px;
+}
+
+.content {
+  padding: 24px;
+  //overflow-y: auto;
+}
+
+.help-drawer {
+  width: 340px;
+}
+
+.active-link {
+  background: rgba(0, 0, 0, 0.08);
+}

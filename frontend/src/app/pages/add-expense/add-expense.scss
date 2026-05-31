@@ -1,0 +1,21 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+
+  h2 { margin: 0; }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  max-width: 480px;
+  gap: 8px;
+}
+
+.fav-meta {
+  margin-left: 8px;
+  font-size: 0.8rem;
+  color: #9ca3af;
+}

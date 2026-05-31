@@ -1,0 +1,67 @@
+<div class="page-header">
+  <h2>Favorites</h2>
+  <button mat-icon-button (click)="help.open('favorites')"><mat-icon>help_outline</mat-icon></button>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="submit()" class="form">
+  <mat-form-field>
+    <mat-label>Title</mat-label>
+    <input matInput formControlName="title" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Amount</mat-label>
+    <input matInput type="number" formControlName="amount" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Category</mat-label>
+    <mat-select formControlName="category">
+      @for (c of categories; track c) {
+        <mat-option [value]="c"><app-category-label [value]="c" /></mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Payment Method (optional)</mat-label>
+    <mat-select formControlName="paymentMethod">
+      <mat-option value="">— None —</mat-option>
+      @for (p of paymentMethods; track p) {
+        <mat-option [value]="p">{{ p | enumLabel }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Add Favorite</button>
+</form>
+
+<table mat-table [dataSource]="favorites()" class="table">
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef>Title</th>
+    <td mat-cell *matCellDef="let f">{{ f.title }}</td>
+  </ng-container>
+  <ng-container matColumnDef="category">
+    <th mat-header-cell *matHeaderCellDef>Category</th>
+    <td mat-cell *matCellDef="let f"><app-category-label [value]="f.category" /></td>
+  </ng-container>
+  <ng-container matColumnDef="amount">
+    <th mat-header-cell *matHeaderCellDef>Amount</th>
+    <td mat-cell *matCellDef="let f">{{ f.amount | currency }}</td>
+  </ng-container>
+  <ng-container matColumnDef="paymentMethod">
+    <th mat-header-cell *matHeaderCellDef>Payment</th>
+    <td mat-cell *matCellDef="let f">{{ f.paymentMethod | enumLabel }}</td>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let f">
+      <button mat-icon-button color="warn" (click)="delete(f.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columns"></tr>
+  <tr mat-row *matRowDef="let row; columns: columns"></tr>
+</table>

@@ -1,0 +1,38 @@
+<mat-toolbar color="primary">
+  <span>Expense Tracker</span>
+</mat-toolbar>
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav mode="side" opened class="sidenav">
+    <mat-nav-list>
+      <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>dashboard</mat-icon>
+        <span matListItemTitle>Dashboard</span>
+      </a>
+      <a mat-list-item routerLink="/expenses" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>list</mat-icon>
+        <span matListItemTitle>Expenses</span>
+      </a>
+      <a mat-list-item routerLink="/add-expense" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>add_circle</mat-icon>
+        <span matListItemTitle>Add Expense</span>
+      </a>
+      <a mat-list-item routerLink="/budget" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>account_balance_wallet</mat-icon>
+        <span matListItemTitle>Budget</span>
+      </a>
+      <a mat-list-item routerLink="/favorites" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>star</mat-icon>
+        <span matListItemTitle>Favorites</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav position="end" [opened]="help.isOpen()" (closedStart)="help.close()" class="help-drawer">
+    <app-help-drawer />
+  </mat-sidenav>
+
+  <mat-sidenav-content class="content">
+    <router-outlet />
+  </mat-sidenav-content>
+</mat-sidenav-container>

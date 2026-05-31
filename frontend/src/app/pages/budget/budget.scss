@@ -1,0 +1,85 @@
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  h2 { margin: 0; }
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.empty {
+  color: #9ca3af;
+  margin-top: 16px;
+}
+
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.plan-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.plan-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.plan-label {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.progress-track {
+  height: 10px;
+  background: #f3f4f6;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease;
+
+  &.ok      { background: #10b981; }
+  &.warning { background: #f59e0b; }
+  &.over    { background: #ef4444; }
+}
+
+.plan-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+
+  .muted { color: #9ca3af; }
+
+  .ok      { color: #10b981; }
+  .warning { color: #f59e0b; }
+  .over    { color: #ef4444; }
+}
+
+.plan-pct {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: right;
+
+  &.ok      { color: #10b981; }
+  &.warning { color: #f59e0b; }
+  &.over    { color: #ef4444; }
+}

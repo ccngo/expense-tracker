@@ -1,0 +1,83 @@
+<div class="page-header">
+  <h2>Dashboard</h2>
+  <div class="header-actions">
+    <mat-button-toggle-group [value]="activePreset()" (change)="setPreset($event.value)">
+      <mat-button-toggle value="month">This Month</mat-button-toggle>
+      <mat-button-toggle value="3months">Last 3 Months</mat-button-toggle>
+      <mat-button-toggle value="year">This Year</mat-button-toggle>
+      <mat-button-toggle value="all">All Time</mat-button-toggle>
+    </mat-button-toggle-group>
+    <button mat-icon-button (click)="help.open('dashboard')"><mat-icon>help_outline</mat-icon></button>
+  </div>
+</div>
+
+@if (warnings().length > 0) {
+  <div class="warnings">
+    @for (w of warnings(); track w.id) {
+      <mat-card [class]="w.percentage >= 100 ? 'warn-card exceeded' : 'warn-card approaching'">
+        <mat-card-content class="warn-content">
+          <mat-icon>{{ warningIcon(w.percentage) }}</mat-icon>
+          <span>{{ warningMessage(w.percentage, w.type, w.period) }}</span>
+          <span class="pct">{{ w.spent | currency }} / {{ w.limit | currency }}</span>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+}
+
+<div class="cards">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Total Spent</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p class="stat">{{ total() | currency }}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Total Expenses</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p class="stat">{{ count() }}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Top Category</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p class="stat"><app-category-label [value]="topCategory()" /></p>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div class="charts">
+  <mat-card class="chart-card">
+    <mat-card-header>
+      <mat-card-title>Spending by Category</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="chart-content">
+      @if (categoryChartData().labels?.length) {
+        <canvas baseChart [data]="categoryChartData()" type="doughnut" [options]="categoryChartOptions"></canvas>
+      } @else {
+        <p class="no-data">No data yet</p>
+      }
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="chart-card">
+    <mat-card-header>
+      <mat-card-title>Monthly Spending Trend</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="chart-content">
+      @if (trendChartData().labels?.length) {
+        <canvas baseChart [data]="trendChartData()" type="bar" [options]="trendChartOptions"></canvas>
+      } @else {
+        <p class="no-data">No data yet</p>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

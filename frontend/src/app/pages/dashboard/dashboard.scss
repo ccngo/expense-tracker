@@ -1,0 +1,98 @@
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+
+  h2 { margin: 0; }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+.warnings {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+  max-height: calc(3 * 72px + 2 * 8px);
+  overflow-y: auto;
+}
+
+.warn-card {
+  flex-shrink: 0;
+
+  .warn-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+
+    mat-icon { flex-shrink: 0; }
+
+    span { flex: 1; }
+
+    .pct {
+      flex: 0;
+      white-space: nowrap;
+      font-weight: 500;
+      font-size: 0.85rem;
+    }
+  }
+
+  &.approaching {
+    border-left: 4px solid #f59e0b;
+    mat-icon { color: #f59e0b; }
+  }
+
+  &.exceeded {
+    border-left: 4px solid #ef4444;
+    mat-icon { color: #ef4444; }
+  }
+}
+
+.cards {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.charts {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.chart-card {
+  flex: 1;
+  min-width: 300px;
+}
+
+.chart-content {
+  padding-top: 12px;
+  max-height: 300px;
+  display: flex;
+  justify-content: center;
+
+  canvas {
+    max-height: 280px;
+  }
+}
+
+.no-data {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  padding: 24px 0;
+}
+
+.stat {
+  font-size: 2rem;
+  font-weight: 500;
+  margin-top: 8px;
+}

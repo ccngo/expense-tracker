@@ -1,0 +1,24 @@
+<div class="drawer-header">
+  <span>Help</span>
+  <button mat-icon-button (click)="help.close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div class="drawer-body">
+  @for (entry of tabs; track entry[0]) {
+    <div #section class="section" [class.active]="isActive(entry[0])">
+      <div class="section-title">
+        <mat-icon>{{ entry[1].icon }}</mat-icon>
+        <strong>{{ entry[1].title }}</strong>
+      </div>
+      <p class="section-desc">{{ entry[1].description }}</p>
+      <ul>
+        @for (tip of entry[1].tips; track tip) {
+          <li>{{ tip }}</li>
+        }
+      </ul>
+    </div>
+    <mat-divider />
+  }
+</div>
