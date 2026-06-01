@@ -2,11 +2,14 @@
 
 A full-stack personal finance app for tracking expenses, managing budgets, and visualising spending habits.
 
+[![CI/CD](https://github.com/ccngo/expense-tracker/actions/workflows/ci.yml/badge.svg)](https://github.com/ccngo/expense-tracker/actions/workflows/ci.yml)
+
 ![.NET](https://img.shields.io/badge/.NET_10-512BD4?style=flat&logo=dotnet&logoColor=white)
 ![Angular](https://img.shields.io/badge/Angular_21-DD0031?style=flat&logo=angular&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-003B57?style=flat&logo=sqlite&logoColor=white)
 ![Angular Material](https://img.shields.io/badge/Angular_Material-757575?style=flat&logo=material-design&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
 
 ## Features
 
@@ -21,11 +24,14 @@ A full-stack personal finance app for tracking expenses, managing budgets, and v
 
 | Layer | Technology |
 |---|---|
-| Backend API | ASP.NET Core 10 Minimal API |
+| Backend API | ASP.NET Core 10 Minimal API → Controllers |
+| Backend Tests | xUnit + in-memory SQLite |
 | Database | SQLite via Entity Framework Core 10 |
 | Frontend | Angular 21 (standalone components, signals) |
 | UI | Angular Material 21 |
 | Charts | Chart.js 4 + ng2-charts |
+| Deployment | Docker + Docker Compose |
+| CI/CD | GitHub Actions |
 
 ## Getting Started
 

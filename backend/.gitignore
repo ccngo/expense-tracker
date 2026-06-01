@@ -9,3 +9,7 @@ obj/
 
 # User-specific files
 *.user
+
+# Test results
+TestResults/
+
