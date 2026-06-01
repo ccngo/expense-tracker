@@ -34,7 +34,19 @@ A full-stack personal finance app for tracking expenses, managing budgets, and v
 - [.NET 10 SDK](https://dotnet.microsoft.com/download)
 - [Node.js 22+](https://nodejs.org)
 
-### Run
+### Quick Start — Docker
+
+If you have Docker installed:
+
+```bash
+docker-compose up
+```
+
+Open `http://localhost:3000` in your browser. Backend runs on `http://localhost:5000`.
+
+Database is persisted to a Docker volume so data survives container restarts.
+
+### Local Development
 
 **Windows — double-click `dev.bat`** or from a terminal:
 

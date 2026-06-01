@@ -19,6 +19,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 
 app.UseHttpsRedirection();
+app.MapGet("/health", () => Results.Ok("OK"));
 app.MapControllers();
 
 using (var scope = app.Services.CreateScope())
