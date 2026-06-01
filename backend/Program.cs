@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using ExpenseTracker.API.Data;
 using ExpenseTracker.API.Models;
+using ExpenseTracker.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,7 @@ builder.Services.ConfigureHttpJsonOptions(options =>
     options.SerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddHostedService<RecurringExpenseService>();
 
 var app = builder.Build();
 
@@ -240,6 +242,41 @@ app.MapDelete("/api/favorites/{id}", async (int id, AppDbContext db) =>
     var fav = await db.FavoriteExpenses.FindAsync(id);
     if (fav is null) return Results.NotFound();
     db.FavoriteExpenses.Remove(fav);
+    await db.SaveChangesAsync();
+    return Results.NoContent();
+});
+
+// Recurring Expenses
+app.MapGet("/api/recurring", async (AppDbContext db) =>
+    await db.RecurringExpenses.OrderBy(r => r.StartDate).ToListAsync());
+
+app.MapPost("/api/recurring", async (RecurringExpense recurring, AppDbContext db) =>
+{
+    db.RecurringExpenses.Add(recurring);
+    await db.SaveChangesAsync();
+    return Results.Created($"/api/recurring/{recurring.Id}", recurring);
+});
+
+app.MapPut("/api/recurring/{id}", async (int id, RecurringExpense updated, AppDbContext db) =>
+{
+    var recurring = await db.RecurringExpenses.FindAsync(id);
+    if (recurring is null) return Results.NotFound();
+    recurring.Title = updated.Title;
+    recurring.Amount = updated.Amount;
+    recurring.Category = updated.Category;
+    recurring.PaymentMethod = updated.PaymentMethod;
+    recurring.Frequency = updated.Frequency;
+    recurring.StartDate = updated.StartDate;
+    recurring.EndDate = updated.EndDate;
+    await db.SaveChangesAsync();
+    return Results.NoContent();
+});
+
+app.MapDelete("/api/recurring/{id}", async (int id, AppDbContext db) =>
+{
+    var recurring = await db.RecurringExpenses.FindAsync(id);
+    if (recurring is null) return Results.NotFound();
+    db.RecurringExpenses.Remove(recurring);
     await db.SaveChangesAsync();
     return Results.NoContent();
 });

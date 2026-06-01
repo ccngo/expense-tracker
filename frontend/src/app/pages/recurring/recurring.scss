@@ -1,0 +1,25 @@
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  h2 { margin: 0; }
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.table {
+  width: 100%;
+}
+
+.empty {
+  color: #9ca3af;
+  margin-top: 16px;
+}

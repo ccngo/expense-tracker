@@ -1,0 +1,102 @@
+<div class="page-header">
+  <h2>Recurring Expenses</h2>
+  <button mat-icon-button (click)="help.open('recurring')"><mat-icon>help_outline</mat-icon></button>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="submit()" class="form">
+  <mat-form-field>
+    <mat-label>Title</mat-label>
+    <input matInput formControlName="title" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Amount</mat-label>
+    <input matInput type="number" formControlName="amount" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Category</mat-label>
+    <mat-select formControlName="category">
+      @for (cat of categories; track cat) {
+        <mat-option [value]="cat">{{ cat | enumLabel }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Payment Method (optional)</mat-label>
+    <mat-select formControlName="paymentMethod">
+      <mat-option value="">— None —</mat-option>
+      @for (pm of paymentMethods; track pm) {
+        <mat-option [value]="pm">{{ pm | enumLabel }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Frequency</mat-label>
+    <mat-select formControlName="frequency">
+      @for (f of frequencies; track f) {
+        <mat-option [value]="f">{{ f | enumLabel }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Start Date</mat-label>
+    <input matInput [matDatepicker]="picker1" formControlName="startDate" />
+    <mat-datepicker-toggle matIconSuffix [for]="picker1" />
+    <mat-datepicker #picker1 />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>End Date (optional)</mat-label>
+    <input matInput [matDatepicker]="picker2" formControlName="endDate" />
+    <mat-datepicker-toggle matIconSuffix [for]="picker2" />
+    <mat-datepicker #picker2 />
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Add Recurring</button>
+</form>
+
+@if (recurring().length === 0) {
+  <p class="empty">No recurring expenses. Add one above to get started.</p>
+} @else {
+  <table mat-table [dataSource]="recurring()" class="table">
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef>Title</th>
+      <td mat-cell *matCellDef="let r">{{ r.title }}</td>
+    </ng-container>
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef>Amount</th>
+      <td mat-cell *matCellDef="let r">{{ r.amount | currency }}</td>
+    </ng-container>
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef>Category</th>
+      <td mat-cell *matCellDef="let r"><app-category-label [value]="r.category" /></td>
+    </ng-container>
+    <ng-container matColumnDef="frequency">
+      <th mat-header-cell *matHeaderCellDef>Frequency</th>
+      <td mat-cell *matCellDef="let r">{{ r.frequency | enumLabel }}</td>
+    </ng-container>
+    <ng-container matColumnDef="startDate">
+      <th mat-header-cell *matHeaderCellDef>Started</th>
+      <td mat-cell *matCellDef="let r">{{ r.startDate }}</td>
+    </ng-container>
+    <ng-container matColumnDef="lastExecutedDate">
+      <th mat-header-cell *matHeaderCellDef>Next Run</th>
+      <td mat-cell *matCellDef="let r">{{ nextRunDate(r) }}</td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let r">
+        <button mat-icon-button color="warn" (click)="delete(r.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns"></tr>
+  </table>
+}
