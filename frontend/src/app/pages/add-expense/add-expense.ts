@@ -10,6 +10,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { CurrencyPipe } from '@angular/common';
 import { ExpenseService } from '../../services/expense';
 import { FavoriteService } from '../../services/favorite';
@@ -24,7 +25,7 @@ import { HelpService } from '../../services/help';
   imports: [
     ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule,
     MatSelectModule, MatDatepickerModule, MatNativeDateModule,
-    MatIconModule, MatMenuModule, CurrencyPipe, EnumLabelPipe, CategoryLabelComponent,
+    MatIconModule, MatMenuModule, MatSnackBarModule, CurrencyPipe, EnumLabelPipe, CategoryLabelComponent,
   ],
   templateUrl: './add-expense.html',
   styleUrl: './add-expense.scss'
@@ -36,6 +37,7 @@ export class AddExpense implements OnInit {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private fb = inject(FormBuilder);
+  private snackbar = inject(MatSnackBar);
   editId = signal<number | null>(null);
   isEditMode = computed(() => this.editId() !== null);
 
@@ -92,12 +94,16 @@ export class AddExpense implements OnInit {
       category: v.category! as Category,
       date: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`,
       notes: v.notes ?? undefined,
-      paymentMethod: (v.paymentMethod || undefined) as PaymentMethod | undefined,
+      paymentMethod: v.paymentMethod ? (v.paymentMethod as PaymentMethod) : undefined,
     };
     const id = this.editId();
     const request: Observable<unknown> = id !== null
       ? this.service.update(id, { id, ...expense })
       : this.service.create(expense);
-    request.subscribe(() => this.router.navigate(['/expenses']));
+    request.subscribe(() => {
+      const msg = id !== null ? 'Expense updated' : 'Expense added';
+      this.snackbar.open(msg, 'OK', { duration: 3000 });
+      this.router.navigate(['/expenses']);
+    });
   }
 }
