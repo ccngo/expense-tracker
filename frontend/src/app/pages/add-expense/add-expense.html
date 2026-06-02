@@ -33,7 +33,7 @@
     <mat-label>Category</mat-label>
     <mat-select formControlName="category">
       @for (cat of categories; track cat) {
-        <mat-option [value]="cat"><app-category-label [value]="cat" /></mat-option>
+        <mat-option [value]="cat">{{ cat | enumLabel }}</mat-option>
       }
     </mat-select>
   </mat-form-field>
