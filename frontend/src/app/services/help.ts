@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 
-export type HelpTab = 'dashboard' | 'expenses' | 'add-expense' | 'budget' | 'favorites';
+export type HelpTab = 'dashboard' | 'expenses' | 'add-expense' | 'budget' | 'favorites' | 'recurring';
 
 export const HELP_CONTENT: Record<HelpTab, { title: string; icon: string; description: string; tips: string[] }> = {
   dashboard: {
@@ -56,6 +56,18 @@ export const HELP_CONTENT: Record<HelpTab, { title: string; icon: string; descri
       'Favorites appear in the Quick Fill menu on the Add Expense page.',
       'Selecting a favorite pre-fills the title, amount, category and payment method.',
       'You still pick the date and can edit any field before saving.',
+    ]
+  },
+  recurring: {
+    title: 'Recurring',
+    icon: 'repeat',
+    description: 'Set up automatic recurring expenses.',
+    tips: [
+      'Create recurring entries for subscriptions, regular bills, or repeat purchases.',
+      'Choose the frequency: daily, weekly, monthly, or yearly.',
+      'Set a start date and optional end date for when the recurrence should stop.',
+      'Expenses are auto-created daily at midnight for any active recurrences that are due.',
+      'The "Next Run" column shows when the expense will be created next.',
     ]
   },
 };

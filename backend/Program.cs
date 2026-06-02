@@ -3,6 +3,8 @@ using System.Text.Json.Serialization;
 using ExpenseTracker.API.Data;
 using ExpenseTracker.API.Services;
 
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("ExpenseTracker.API.Tests")]
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();

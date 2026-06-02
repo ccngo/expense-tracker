@@ -4,7 +4,7 @@ using ExpenseTracker.API.Data;
 
 namespace ExpenseTracker.API.Services;
 
-public class RecurringExpenseService(AppDbContext db) : BackgroundService
+public class RecurringExpenseService(IServiceScopeFactory scopeFactory) : BackgroundService
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
@@ -24,6 +24,9 @@ public class RecurringExpenseService(AppDbContext db) : BackgroundService
 
     private async Task ProcessRecurringExpenses()
     {
+        await using var scope = scopeFactory.CreateAsyncScope();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
         var today = DateOnly.FromDateTime(DateTime.Today);
         var recurring = await db.RecurringExpenses
             .Where(r => r.StartDate <= today && (r.EndDate == null || r.EndDate >= today))
@@ -52,16 +55,15 @@ public class RecurringExpenseService(AppDbContext db) : BackgroundService
 
             if (shouldExecute)
             {
-                var expense = new Expense
+                db.Expenses.Add(new Expense
                 {
                     Title = r.Title,
                     Amount = r.Amount,
                     Category = r.Category,
                     PaymentMethod = r.PaymentMethod,
                     Date = today,
-                    Notes = $"Recurring: {r.Title}"
-                };
-                db.Expenses.Add(expense);
+                    Notes = $"Recurring: {r.Title}",
+                });
                 r.LastExecutedDate = today;
             }
         }

@@ -67,7 +67,7 @@ export class Recurring implements OnInit {
       title: v.title!,
       amount: v.amount!,
       category: v.category! as Category,
-      paymentMethod: (v.paymentMethod || undefined) as PaymentMethod | undefined,
+      paymentMethod: v.paymentMethod ? (v.paymentMethod as PaymentMethod) : null,
       frequency: v.frequency! as RecurringFrequency,
       startDate: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`,
       endDate: endD ? `${endD.getFullYear()}-${String(endD.getMonth() + 1).padStart(2, '0')}-${String(endD.getDate()).padStart(2, '0')}` : null,
