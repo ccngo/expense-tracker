@@ -6,7 +6,16 @@ public static class DbSeeder
 {
     public static async Task SeedAsync(AppDbContext db)
     {
-        if (db.Expenses.Any()) return;
+        if (!db.AppSettings.Any())
+        {
+            db.AppSettings.Add(new AppSettings());
+        }
+
+        if (db.Expenses.Any())
+        {
+            await db.SaveChangesAsync();
+            return;
+        }
 
         var today = DateOnly.FromDateTime(DateTime.Today);
 
