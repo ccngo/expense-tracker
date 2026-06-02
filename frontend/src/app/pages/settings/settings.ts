@@ -136,17 +136,14 @@ export class SettingsComponent implements OnInit {
     const newPassword = control.get('newPassword')?.value || '';
     const confirmPassword = control.get('confirmPassword')?.value || '';
 
-    // If both are empty, it's valid (removing password)
     if (!newPassword && !confirmPassword) {
       return null;
     }
 
-    // If one is empty but not the other, it's invalid
     if (!newPassword || !confirmPassword) {
-      return control.get('confirmPassword')?.setErrors({ passwordMismatch: true }) && { passwordMismatch: true };
+      return { passwordMismatch: true };
     }
 
-    // If both are set, they must match
     if (newPassword !== confirmPassword) {
       return { passwordMismatch: true };
     }

@@ -72,7 +72,7 @@ export class LoginComponent {
     this.isLoading.set(true);
     this.errorMessage.set('');
 
-    const password = this.form.get('password')?.value;
+    const password = this.form.get('password')?.value as string;
     this.authService.login(password).subscribe({
       next: () => {
         this.snackbar.open('Logged in successfully', 'OK', { duration: 2000 });
