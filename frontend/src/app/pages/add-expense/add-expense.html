@@ -8,8 +8,11 @@
       <mat-menu #favMenu="matMenu">
         @for (fav of favorites(); track fav.id) {
           <button mat-menu-item (click)="applyFavorite(fav)">
-            <span>{{ fav.title }}</span>
-            <span class="fav-meta">{{ fav.amount | currency }} · <app-category-label [value]="fav.category" /></span>
+            <span>{{ privacy.privacyMode() ? '••••' : fav.title }}</span>
+            <span class="fav-meta">
+              {{ privacy.privacyMode() ? '••••' : (fav.amount | currency) }} ·
+              @if (privacy.privacyMode()) { ••••  } @else { <app-category-label [value]="fav.category" /> }
+            </span>
           </button>
         }
       </mat-menu>

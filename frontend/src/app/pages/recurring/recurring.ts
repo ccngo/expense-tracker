@@ -16,6 +16,7 @@ import { Category, PaymentMethod } from '../../models/expense';
 import { EnumLabelPipe } from '../../pipes/enum-label-pipe';
 import { CategoryLabelComponent } from '../../components/category-label';
 import { HelpService } from '../../services/help';
+import { PrivacyService } from '../../services/privacy';
 
 @Component({
   selector: 'app-recurring',
@@ -30,6 +31,7 @@ import { HelpService } from '../../services/help';
 })
 export class Recurring implements OnInit {
   help = inject(HelpService);
+  privacy = inject(PrivacyService);
   private service = inject(RecurringService);
   private fb = inject(FormBuilder);
   private snackbar = inject(MatSnackBar);

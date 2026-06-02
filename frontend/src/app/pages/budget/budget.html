@@ -50,22 +50,29 @@
         <div class="progress-track">
           <div
             class="progress-fill {{ progressClass(s.percentage) }}"
-            [style.width.%]="s.percentage > 100 ? 100 : s.percentage">
+            [style.width.%]="privacy.privacyMode() ? 0 : (s.percentage > 100 ? 100 : s.percentage)">
           </div>
         </div>
 
         <div class="plan-meta">
-          <span>{{ s.spent | currency }} <span class="muted">of {{ s.limit | currency }}</span></span>
-          <span [class]="progressClass(s.percentage)">
-            @if (s.percentage >= 100) {
-              {{ (s.spent - s.limit) | currency }} over
-            } @else {
-              {{ (s.limit - s.spent) | currency }} left
-            }
-          </span>
+          @if (privacy.privacyMode()) {
+            <span class="privacy-text">••••</span>
+            <span class="privacy-text">••••</span>
+          } @else {
+            <span>{{ s.spent | currency }} <span class="muted">of {{ s.limit | currency }}</span></span>
+            <span [class]="progressClass(s.percentage)">
+              @if (s.percentage >= 100) {
+                {{ (s.spent - s.limit) | currency }} over
+              } @else {
+                {{ (s.limit - s.spent) | currency }} left
+              }
+            </span>
+          }
         </div>
 
-        <div class="plan-pct {{ progressClass(s.percentage) }}">{{ s.percentage }}%</div>
+        <div class="plan-pct {{ progressClass(s.percentage) }}">
+          {{ privacy.privacyMode() ? '••' : s.percentage + '%' }}
+        </div>
       </div>
     }
   </div>

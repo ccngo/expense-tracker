@@ -19,6 +19,7 @@ import { Category, PaymentMethod } from '../../models/expense';
 import { EnumLabelPipe } from '../../pipes/enum-label-pipe';
 import { CategoryLabelComponent } from '../../components/category-label';
 import { HelpService } from '../../services/help';
+import { PrivacyService } from '../../services/privacy';
 
 @Component({
   selector: 'app-add-expense',
@@ -32,6 +33,7 @@ import { HelpService } from '../../services/help';
 })
 export class AddExpense implements OnInit {
   help = inject(HelpService);
+  privacy = inject(PrivacyService);
   private service = inject(ExpenseService);
   private favoriteService = inject(FavoriteService);
   private router = inject(Router);

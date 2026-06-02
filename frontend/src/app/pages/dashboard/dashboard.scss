@@ -96,3 +96,35 @@
   font-weight: 500;
   margin-top: 8px;
 }
+
+.privacy-value {
+  color: #9ca3af;
+  letter-spacing: 0.15em;
+}
+
+.privacy-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 48px 0;
+  color: #9ca3af;
+
+  mat-icon { font-size: 2rem; width: 2rem; height: 2rem; }
+
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+}
+
+.inline-icon {
+  font-size: 1rem !important;
+  width: 1rem !important;
+  height: 1rem !important;
+  vertical-align: middle;
+}

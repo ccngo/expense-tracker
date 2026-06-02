@@ -1,5 +1,9 @@
 <mat-toolbar color="primary">
   <span>Expense Tracker</span>
+  <span class="toolbar-spacer"></span>
+  <button mat-icon-button (click)="privacy.toggle()" [attr.aria-label]="privacy.privacyMode() ? 'Show data' : 'Hide data'">
+    <mat-icon>{{ privacy.privacyMode() ? 'visibility_off' : 'visibility' }}</mat-icon>
+  </button>
 </mat-toolbar>
 
 <mat-sidenav-container class="sidenav-container">

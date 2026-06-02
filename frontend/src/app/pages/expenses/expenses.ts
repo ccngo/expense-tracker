@@ -17,6 +17,7 @@ import { Expense, Category, PaymentMethod } from '../../models/expense';
 import { EnumLabelPipe } from '../../pipes/enum-label-pipe';
 import { CategoryLabelComponent } from '../../components/category-label';
 import { HelpService } from '../../services/help';
+import { PrivacyService } from '../../services/privacy';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
@@ -32,6 +33,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 })
 export class Expenses implements OnInit {
   help = inject(HelpService);
+  privacy = inject(PrivacyService);
   private service = inject(ExpenseService);
   private fb = inject(FormBuilder);
 

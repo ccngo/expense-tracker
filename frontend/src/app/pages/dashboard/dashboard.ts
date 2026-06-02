@@ -10,6 +10,7 @@ import { Chart, ArcElement, Tooltip, Legend, DoughnutController, CategoryScale, 
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { ExpenseService } from '../../services/expense';
 import { BudgetService } from '../../services/budget';
+import { PrivacyService } from '../../services/privacy';
 import { Expense } from '../../models/expense';
 import { BudgetSummary } from '../../models/budget-plan';
 import { LABELS } from '../../pipes/enum-label-pipe';
@@ -35,6 +36,7 @@ Chart.register(ArcElement, Tooltip, Legend, DoughnutController, CategoryScale, L
 })
 export class Dashboard implements OnInit {
   help = inject(HelpService);
+  privacy = inject(PrivacyService);
   private expenseService = inject(ExpenseService);
   private budgetService = inject(BudgetService);
 

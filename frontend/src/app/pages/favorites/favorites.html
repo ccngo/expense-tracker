@@ -39,19 +39,21 @@
 <table mat-table [dataSource]="favorites()" class="table">
   <ng-container matColumnDef="title">
     <th mat-header-cell *matHeaderCellDef>Title</th>
-    <td mat-cell *matCellDef="let f">{{ f.title }}</td>
+    <td mat-cell *matCellDef="let f">{{ privacy.privacyMode() ? '••••' : f.title }}</td>
   </ng-container>
   <ng-container matColumnDef="category">
     <th mat-header-cell *matHeaderCellDef>Category</th>
-    <td mat-cell *matCellDef="let f"><app-category-label [value]="f.category" /></td>
+    <td mat-cell *matCellDef="let f">
+      @if (privacy.privacyMode()) { ••••  } @else { <app-category-label [value]="f.category" /> }
+    </td>
   </ng-container>
   <ng-container matColumnDef="amount">
     <th mat-header-cell *matHeaderCellDef>Amount</th>
-    <td mat-cell *matCellDef="let f">{{ f.amount | currency }}</td>
+    <td mat-cell *matCellDef="let f">{{ privacy.privacyMode() ? '••••' : (f.amount | currency) }}</td>
   </ng-container>
   <ng-container matColumnDef="paymentMethod">
     <th mat-header-cell *matHeaderCellDef>Payment</th>
-    <td mat-cell *matCellDef="let f">{{ f.paymentMethod | enumLabel }}</td>
+    <td mat-cell *matCellDef="let f">{{ privacy.privacyMode() ? '••••' : (f.paymentMethod | enumLabel) }}</td>
   </ng-container>
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef></th>

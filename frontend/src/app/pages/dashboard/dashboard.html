@@ -11,7 +11,7 @@
   </div>
 </div>
 
-@if (warnings().length > 0) {
+@if (!privacy.privacyMode() && warnings().length > 0) {
   <div class="warnings">
     @for (w of warnings(); track w.id) {
       <mat-card [class]="w.percentage >= 100 ? 'warn-card exceeded' : 'warn-card approaching'">
@@ -31,7 +31,11 @@
       <mat-card-title>Total Spent</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <p class="stat">{{ total() | currency }}</p>
+      @if (privacy.privacyMode()) {
+        <p class="stat privacy-value">••••</p>
+      } @else {
+        <p class="stat">{{ total() | currency }}</p>
+      }
     </mat-card-content>
   </mat-card>
 
@@ -40,7 +44,11 @@
       <mat-card-title>Total Expenses</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <p class="stat">{{ count() }}</p>
+      @if (privacy.privacyMode()) {
+        <p class="stat privacy-value">••••</p>
+      } @else {
+        <p class="stat">{{ count() }}</p>
+      }
     </mat-card-content>
   </mat-card>
 
@@ -49,7 +57,11 @@
       <mat-card-title>Top Category</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <p class="stat"><app-category-label [value]="topCategory()" /></p>
+      @if (privacy.privacyMode()) {
+        <p class="stat privacy-value">••••</p>
+      } @else {
+        <p class="stat"><app-category-label [value]="topCategory()" /></p>
+      }
     </mat-card-content>
   </mat-card>
 </div>
@@ -60,7 +72,12 @@
       <mat-card-title>Spending by Category</mat-card-title>
     </mat-card-header>
     <mat-card-content class="chart-content">
-      @if (categoryChartData().labels?.length) {
+      @if (privacy.privacyMode()) {
+        <div class="privacy-placeholder">
+          <mat-icon>lock</mat-icon>
+          <p>Hidden — click <mat-icon class="inline-icon">visibility_off</mat-icon> to reveal</p>
+        </div>
+      } @else if (categoryChartData().labels?.length) {
         <canvas baseChart [data]="categoryChartData()" type="doughnut" [options]="categoryChartOptions"></canvas>
       } @else {
         <p class="no-data">No data yet</p>
@@ -73,7 +90,12 @@
       <mat-card-title>Monthly Spending Trend</mat-card-title>
     </mat-card-header>
     <mat-card-content class="chart-content">
-      @if (trendChartData().labels?.length) {
+      @if (privacy.privacyMode()) {
+        <div class="privacy-placeholder">
+          <mat-icon>lock</mat-icon>
+          <p>Hidden — click <mat-icon class="inline-icon">visibility_off</mat-icon> to reveal</p>
+        </div>
+      } @else if (trendChartData().labels?.length) {
         <canvas baseChart [data]="trendChartData()" type="bar" [options]="trendChartOptions"></canvas>
       } @else {
         <p class="no-data">No data yet</p>

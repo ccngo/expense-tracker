@@ -11,6 +11,7 @@ import { BudgetService } from '../../services/budget';
 import { BudgetSummary, BudgetType, BudgetPeriod } from '../../models/budget-plan';
 import { EnumLabelPipe } from '../../pipes/enum-label-pipe';
 import { HelpService } from '../../services/help';
+import { PrivacyService } from '../../services/privacy';
 
 @Component({
   selector: 'app-budget',
@@ -23,6 +24,7 @@ import { HelpService } from '../../services/help';
 })
 export class Budget implements OnInit {
   help = inject(HelpService);
+  privacy = inject(PrivacyService);
   private service = inject(BudgetService);
   private fb = inject(FormBuilder);
   private snackbar = inject(MatSnackBar);

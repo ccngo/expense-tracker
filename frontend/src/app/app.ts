@@ -9,6 +9,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { HelpDrawerComponent } from './components/help-drawer';
 import { HelpService } from './services/help';
 import { AuthService } from './services/auth';
+import { PrivacyService } from './services/privacy';
 import { LoginComponent } from './pages/login/login';
 
 @Component({
@@ -23,6 +24,7 @@ import { LoginComponent } from './pages/login/login';
 })
 export class App implements OnInit {
   help = inject(HelpService);
+  privacy = inject(PrivacyService);
   private authService = inject(AuthService);
   private dialog = inject(MatDialog);
 
