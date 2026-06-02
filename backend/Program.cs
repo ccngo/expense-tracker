@@ -25,6 +25,10 @@ app.MapGet("/health", () => Results.Ok("OK"));
 app.MapControllers();
 
 using (var scope = app.Services.CreateScope())
-    scope.ServiceProvider.GetRequiredService<AppDbContext>().Database.Migrate();
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+    DbSeeder.SeedAsync(db).GetAwaiter().GetResult();
+}
 
 app.Run();
